@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ESG 減碳認證 - DAWN LOOP</title>
+    <title>ESG 認證 - 盈創新經濟</title>
     <style>
         :root {
             --earth-base: #4a3728; /* 深土色：基石 */
@@ -36,7 +36,8 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
-            padding: 30px;
+            /* 1. 增加卡片內版面上下留白 */
+            padding: 50px 30px;
             color: white;
             border: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.1s ease-out;
@@ -71,30 +72,35 @@
         .main-title {
             text-align: center;
             font-size: 18px;
-            margin-top: 40px;
+            /* 2. 增加標題與圖騰區的留白 */
+            margin-top: 50px;
+            margin-bottom: 50px;
             font-weight: 300;
             letter-spacing: 2px;
             color: rgba(255,255,255,0.9);
             z-index: 2;
         }
 
-        /* 中央數據圖騰 */
+        /* 中央數據圖騰與互動區 */
         .totem-area {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            cursor: pointer; /* 點擊互動提示 */
         }
 
+        /* 3. 讓核心產生酷炫呼吸感的動畫 */
         .star-glow {
             position: absolute;
             width: 250px;
             height: 250px;
             background: radial-gradient(circle, rgba(230,213,184,0.3) 0%, transparent 70%);
-            animation: pulse 4s infinite ease-in-out;
+            animation: breatheGlow 5s infinite ease-in-out; /* 呼吸動畫，較長且平緩 */
         }
 
+        /* 4. 六芒星增加脈動呼吸感 */
         .hexagram {
             width: 200px;
             height: 200px;
@@ -103,9 +109,12 @@
             stroke-width: 1;
             opacity: 0.8;
             filter: drop-shadow(0 0 5px var(--gold-light));
-            animation: rotate 20s infinite linear;
+            animation: 
+                rotateStar 25s infinite linear, /* 原有旋轉 */
+                pulseStar 5s infinite ease-in-out; /* 增加呼吸脈動 */
         }
 
+        /* 5. 數據標籤初始狀態：隱藏且置中縮小，增加彈出動畫 */
         .data-label {
             position: absolute;
             background: rgba(255,255,255,0.1);
@@ -115,16 +124,30 @@
             font-size: 11px;
             border: 0.5px solid rgba(255,255,255,0.2);
             color: var(--gold-light);
+            /* 互動前：隱藏並置中 */
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(0, 0) scale(0); 
+            transform-origin: center center;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈簧效果 */
+            z-index: 10;
         }
-        .label-1 { top: 20%; left: -10px; }
-        .label-2 { top: 20%; right: -10px; }
-        /* 調整：向下移動 30pt */
-        .label-3 { bottom: calc(15% - 30pt); }
+        
+        /* 6. 點擊核心後跑出來的動畫位置 */
+        .show-labels .data-label {
+            opacity: 1;
+            visibility: visible;
+        }
+        .show-labels .label-1 { transform: translate(-80px, calc(0px - 20%)) scale(1); }
+        .show-labels .label-2 { transform: translate(80px, calc(0px - 20%)) scale(1); }
+        .show-labels .label-3 { transform: translate(0, calc(200px / 2 + 15%)) scale(1); }
 
         /* 認證內文 */
         .footer {
             text-align: center;
             z-index: 2;
+            /* 7. 增加內文與圖騰區留白 */
+            margin-top: 50px;
         }
 
         .cert-text {
@@ -163,7 +186,7 @@
         }
         .esg-badge { background: rgba(255,255,255,0.05); }
 
-        /* 「成為倡議夥伴」按鈕樣式 */
+        /* 8. 去除外框與底色，改為乾淨連結 */
         .partner-btn {
             display: inline-block;
             font-size: 11px;
@@ -171,24 +194,30 @@
             text-decoration: none;
             margin-top: 25px;
             letter-spacing: 2px;
-            padding: 8px 20px;
-            border: 1px solid rgba(230, 213, 184, 0.4);
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
+            /* 純文字樣式，移除外框、底色、內間距 */
+            padding: 5px 0px; 
+            border: none; 
+            background: transparent; 
+            opacity: 0.5;
             transition: all 0.3s ease;
         }
         .partner-btn:active {
-            background: rgba(230, 213, 184, 0.2);
-            transform: scale(0.95);
+            opacity: 0.8;
+            transform: scale(0.98);
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.2); opacity: 0.5; }
+        /* 新增動畫定義 */
+        @keyframes breatheGlow {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.1); opacity: 0.4; }
         }
-        @keyframes rotate {
+        @keyframes rotateStar {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+        @keyframes pulseStar {
+            0%, 100% { transform: rotate(var(--current-rotation, 0deg)) scale(1); filter: drop-shadow(0 0 5px var(--gold-light)); }
+            50% { transform: rotate(var(--current-rotation, 0deg)) scale(1.03); filter: drop-shadow(0 0 8px var(--gold-light)); }
         }
 
         .shimmer {
@@ -223,7 +252,7 @@
 
     <h2 class="main-title">盈創新經濟股份有限公司<br>ESG 減碳認證卡</h2>
 
-    <div class="totem-area">
+    <div class="totem-area show-labels" id="totemArea">
         <div class="star-glow"></div>
         <svg class="hexagram" viewBox="0 0 100 100">
             <polygon points="50,5 90,75 10,75" />
@@ -257,7 +286,20 @@
 
 <script>
     const card = document.getElementById('card');
-    
+    const totemArea = document.getElementById('totemArea');
+    const hexagram = document.querySelector('.hexagram');
+
+    // 初始化狀態：預設隱藏數據標籤（移除 show-labels 類別）
+    window.addEventListener('load', () => {
+        totemArea.classList.remove('show-labels');
+    });
+
+    // 9. 新增點擊互動：點擊核心區域切換標籤跑出來/隱藏
+    totemArea.addEventListener('click', () => {
+        totemArea.classList.toggle('show-labels');
+    });
+
+    // 原有手機陀螺儀互動
     document.addEventListener('mousemove', (e) => {
         let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
         let yAxis = (window.innerHeight / 2 - e.pageY) / 25;

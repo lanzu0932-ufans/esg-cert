@@ -27,7 +27,7 @@
         /* 認證卡容器 */
         .card-container {
             width: 90vw;
-            height: 160vw; /* 適配手機長寬比 */
+            height: 160vw;
             max-width: 400px;
             max-height: 700px;
             background: linear-gradient(135deg, #634d3a 0%, #a67c52 50%, #4a3728 100%);
@@ -40,7 +40,6 @@
             color: white;
             border: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.1s ease-out;
-            /* 模擬再生紙質感 */
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
         }
 
@@ -57,7 +56,7 @@
             width: 40px;
             height: 40px;
             border: 2px solid var(--gold-light);
-            border-radius: 50%; /* 圓形：金 */
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -65,7 +64,7 @@
         .logo-square {
             width: 18px;
             height: 18px;
-            border: 2px solid var(--gold-light); /* 方形：土 */
+            border: 2px solid var(--gold-light);
         }
         .logo-text { font-size: 14px; font-weight: 800; letter-spacing: 1px; color: var(--gold-light); }
 
@@ -96,7 +95,6 @@
             animation: pulse 4s infinite ease-in-out;
         }
 
-        /* 六芒星 SVG */
         .hexagram {
             width: 200px;
             height: 200px;
@@ -108,7 +106,6 @@
             animation: rotate 20s infinite linear;
         }
 
-        /* 數據標籤 */
         .data-label {
             position: absolute;
             background: rgba(255,255,255,0.1);
@@ -121,7 +118,7 @@
         }
         .label-1 { top: 20%; left: -10px; }
         .label-2 { top: 20%; right: -10px; }
-        /* 1. 調整：向下移動 30pt */
+        /* 調整：向下移動 30pt */
         .label-3 { bottom: calc(15% - 30pt); }
 
         /* 認證內文 */
@@ -137,7 +134,6 @@
             margin-bottom: 30px;
         }
 
-        /* 2. 調整：去掉底色，改為金色加粗 */
         .company-name {
             display: inline-block;
             padding: 5px 0px;
@@ -147,7 +143,6 @@
             margin: 0 5px;
         }
 
-        /* 徽章組 */
         .badges {
             display: flex;
             justify-content: center;
@@ -168,7 +163,25 @@
         }
         .esg-badge { background: rgba(255,255,255,0.05); }
 
-        /* 動畫 */
+        /* 「成為倡議夥伴」按鈕樣式 */
+        .partner-btn {
+            display: inline-block;
+            font-size: 11px;
+            color: var(--gold-light);
+            text-decoration: none;
+            margin-top: 25px;
+            letter-spacing: 2px;
+            padding: 8px 20px;
+            border: 1px solid rgba(230, 213, 184, 0.4);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .partner-btn:active {
+            background: rgba(230, 213, 184, 0.2);
+            transform: scale(0.95);
+        }
+
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.3; }
             50% { transform: scale(1.2); opacity: 0.5; }
@@ -178,7 +191,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* 閃光層 */
         .shimmer {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -227,7 +239,7 @@
         <p class="cert-text">
             此卡認證 <span class="company-name"><br>盈創新經濟股份有限公司</span><br> 於 2026 年採購永續禮盒<br>
             落實友善環境，實踐企業社會責任<br>
-                  </p>
+        </p>
         
         <div class="badges">
             <div class="badge">2026<br><span style="font-size: 7px; opacity: 0.7;">ISSUED</span></div>
@@ -237,14 +249,13 @@
             </div>
         </div>
         
-        <p style="font-size: 9px; opacity: 0.4; margin-top: 20px; letter-spacing: 1px;">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe30FeEbBi2PwQoI91xxg_NLfezE9lnDHImLm4WLhOHRvFyTw/viewform" target="_blank" class="partner-btn">
             成為倡議夥伴
-        </p>
+        </a>
     </div>
 </div>
 
 <script>
-    // 增加手機陀螺儀互動感
     const card = document.getElementById('card');
     
     document.addEventListener('mousemove', (e) => {
@@ -253,7 +264,6 @@
         card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
     });
 
-    // 針對手機端觸摸時的微動
     card.addEventListener('touchmove', (e) => {
         let touch = e.touches[0];
         let xAxis = (window.innerWidth / 2 - touch.pageX) / 20;
